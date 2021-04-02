@@ -8,6 +8,8 @@ using ESRI.ArcGIS.DataSourcesFile;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 
+using System.IO;
+
 namespace MapControlApplication111 {
   class DataOperator {
     public IMap m_map;
@@ -61,10 +63,27 @@ namespace MapControlApplication111 {
 
       return dataTable;
     }
-    public IFeatureClass CreateShapefile(string sParentDirectory, string sWorkspaceName, string sFileName) {
-      if (System.IO.Directory.Exists(sParentDirectory + sWorkspaceName)) {
-        System.IO.Directory.Delete(sParentDirectory + sWorkspaceName);
+    // 清空指定的文件夹，但不删除文件夹
+    /// </summary>
+    /// <param name="dir"></param>
+    public static void DeleteFolder(string dir) {
+      foreach (string d in Directory.GetFileSystemEntries(dir)) {
+        if (File.Exists(d)) {
+          FileInfo fi = new FileInfo(d);
+          if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
+            fi.Attributes = FileAttributes.Normal;
+          File.Delete(d);//直接删除其中的文件   
+        } else {
+          DirectoryInfo d1 = new DirectoryInfo(d);
+          if (d1.GetFiles().Length != 0) {
+            DeleteFolder(d1.FullName);
+          }
+          Directory.Delete(d);
+        }
       }
+    }
+    public IFeatureClass CreateShapefile(string sParentDirectory, string sWorkspaceName, string sFileName) {
+      DeleteFolder(sParentDirectory +"\\"+ sWorkspaceName);
       IWorkspaceFactory workspaceFactory = new ShapefileWorkspaceFactoryClass();
       IWorkspaceName workspaceName = workspaceFactory.Create(sParentDirectory, sWorkspaceName, null, 0);
       ESRI.ArcGIS.esriSystem.IName name = workspaceName as ESRI.ArcGIS.esriSystem.IName;
@@ -94,8 +113,7 @@ namespace MapControlApplication111 {
       fieldEdit.GeometryDef_2 = geoDefEdit;
       fieldsEdit.AddField((IField)fieldEdit);
       IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(sFileName, fields, null, null, esriFeatureType.esriFTSimple, "Shape", "");
-      if (featureClass == null) 
-        {
+      if (featureClass == null) {
         return null;
       }
       return featureClass;
@@ -119,49 +137,41 @@ namespace MapControlApplication111 {
       activeView.Refresh();
       return true;
     }
-    public bool AddFeatureToLayer(string sLayerName, string sFeatureName, IPoint point) 
-      {
-      if (sLayerName == "" || sFeatureName == "" || point == null || m_map == null) 
-        {
+    public bool AddFeatureToLayer(string sLayerName, string sFeatureName, IPoint point) {
+      if (sLayerName == "" || sFeatureName == "" || point == null || m_map == null) {
         return false;
-        }
+      }
       ILayer layer = null;
-      for (int i = 0; i < m_map.LayerCount; i++) 
-        {
+      for (int i = 0; i < m_map.LayerCount; i++) {
         layer = m_map.get_Layer(i);
-        if (layer.Name == sLayerName) 
-          {
+        if (layer.Name == sLayerName) {
           break;
-          }
+        }
         layer = null;
-        }
-      if (layer == null) 
-        {
+      }
+      if (layer == null) {
         return false;
-        }
+      }
       IFeatureLayer featureLayer = layer as IFeatureLayer;
       IFeatureClass featureClass = featureLayer.FeatureClass;
       IFeature feature = featureClass.CreateFeature();
-      if (feature == null) 
-        {
+      if (feature == null) {
         return false;
-        }
+      }
       feature.Shape = point;
       int index = feature.Fields.FindField("Name");
       feature.set_Value(index, sFeatureName);
       feature.Store();
-      if (feature == null) 
-        {
+      if (feature == null) {
         return false;
-        }
+      }
       IActiveView activeView = m_map as IActiveView;
-      if (activeView == null) 
-        {
+      if (activeView == null) {
         return false;
-        }
+      }
       activeView.Refresh();
       return true;
-      }
-   
+    }
+
   }
 }

@@ -61,5 +61,107 @@ namespace MapControlApplication111 {
 
       return dataTable;
     }
+    public IFeatureClass CreateShapefile(string sParentDirectory, string sWorkspaceName, string sFileName) {
+      if (System.IO.Directory.Exists(sParentDirectory + sWorkspaceName)) {
+        System.IO.Directory.Delete(sParentDirectory + sWorkspaceName);
+      }
+      IWorkspaceFactory workspaceFactory = new ShapefileWorkspaceFactoryClass();
+      IWorkspaceName workspaceName = workspaceFactory.Create(sParentDirectory, sWorkspaceName, null, 0);
+      ESRI.ArcGIS.esriSystem.IName name = workspaceName as ESRI.ArcGIS.esriSystem.IName;
+      IWorkspace workspace = (IWorkspace)name.Open();
+      IFeatureWorkspace featureWorkspace = workspace as IFeatureWorkspace;
+      IFields fields = new FieldsClass();
+      IFieldsEdit fieldsEdit = fields as IFieldsEdit;
+      IFieldEdit fieldEdit = new FieldClass();
+      fieldEdit.Name_2 = "OID";
+      fieldEdit.AliasName_2 = "序号";
+      fieldEdit.Type_2 = esriFieldType.esriFieldTypeString;
+      fieldsEdit.AddField((IField)fieldEdit);
+      fieldEdit = new FieldClass();
+      fieldEdit.Name_2 = "Name";
+      fieldEdit.AliasName_2 = "名称";
+      fieldEdit.Type_2 = esriFieldType.esriFieldTypeString;
+      fieldsEdit.AddField((IField)fieldEdit);
+      IGeometryDefEdit geoDefEdit = new GeometryDefClass();
+      ISpatialReference spatialReference = m_map.SpatialReference;
+      geoDefEdit.SpatialReference_2 = spatialReference;
+      geoDefEdit.GeometryType_2 = esriGeometryType.esriGeometryPoint;
+      fieldEdit = new FieldClass();
+      String sShapeFieldName = "Shape";
+      fieldEdit.Name_2 = sShapeFieldName;
+      fieldEdit.AliasName_2 = "形状";
+      fieldEdit.Type_2 = esriFieldType.esriFieldTypeGeometry;
+      fieldEdit.GeometryDef_2 = geoDefEdit;
+      fieldsEdit.AddField((IField)fieldEdit);
+      IFeatureClass featureClass = featureWorkspace.CreateFeatureClass(sFileName, fields, null, null, esriFeatureType.esriFTSimple, "Shape", "");
+      if (featureClass == null) 
+        {
+        return null;
+      }
+      return featureClass;
+    }
+    public bool AddFeatureClassToMap(IFeatureClass featureClass, String sLayerName) {
+      if (featureClass == null) {
+        return false;
+      }
+      IFeatureLayer featureLayer = new FeatureLayerClass();
+      featureLayer.FeatureClass = featureClass;
+      featureLayer.Name = sLayerName;
+      ILayer layer = featureLayer as ILayer;
+      if (layer == null) {
+        return false;
+      }
+      m_map.AddLayer(layer);
+      IActiveView activeView = m_map as IActiveView;
+      if (activeView == null) {
+        return false;
+      }
+      activeView.Refresh();
+      return true;
+    }
+    public bool AddFeatureToLayer(string sLayerName, string sFeatureName, IPoint point) 
+      {
+      if (sLayerName == "" || sFeatureName == "" || point == null || m_map == null) 
+        {
+        return false;
+        }
+      ILayer layer = null;
+      for (int i = 0; i < m_map.LayerCount; i++) 
+        {
+        layer = m_map.get_Layer(i);
+        if (layer.Name == sLayerName) 
+          {
+          break;
+          }
+        layer = null;
+        }
+      if (layer == null) 
+        {
+        return false;
+        }
+      IFeatureLayer featureLayer = layer as IFeatureLayer;
+      IFeatureClass featureClass = featureLayer.FeatureClass;
+      IFeature feature = featureClass.CreateFeature();
+      if (feature == null) 
+        {
+        return false;
+        }
+      feature.Shape = point;
+      int index = feature.Fields.FindField("Name");
+      feature.set_Value(index, sFeatureName);
+      feature.Store();
+      if (feature == null) 
+        {
+        return false;
+        }
+      IActiveView activeView = m_map as IActiveView;
+      if (activeView == null) 
+        {
+        return false;
+        }
+      activeView.Refresh();
+      return true;
+      }
+   
   }
 }

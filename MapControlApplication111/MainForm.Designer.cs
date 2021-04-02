@@ -38,6 +38,7 @@ namespace MapControlApplication111 {
       this.miPrint = new System.Windows.Forms.ToolStripMenuItem();
       this.menuSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.menuExitApp = new System.Windows.Forms.ToolStripMenuItem();
+      this.miOutput = new System.Windows.Forms.ToolStripMenuItem();
       this.miCreateBookmark = new System.Windows.Forms.ToolStripMenuItem();
       this.cbBookmarkList = new System.Windows.Forms.ToolStripComboBox();
       this.miSpaceData = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +48,12 @@ namespace MapControlApplication111 {
       this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
       this.miMap = new System.Windows.Forms.ToolStripMenuItem();
       this.miPageLayer = new System.Windows.Forms.ToolStripMenuItem();
+      this.miData = new System.Windows.Forms.ToolStripMenuItem();
+      this.miCreateShapefile = new System.Windows.Forms.ToolStripMenuItem();
+      this.miAddFeature = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSpaceAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSpaceFilter = new System.Windows.Forms.ToolStripMenuItem();
+      this.miInfo = new System.Windows.Forms.ToolStripMenuItem();
       this.axMapControl1 = new ESRI.ArcGIS.Controls.AxMapControl();
       this.axToolbarControl1 = new ESRI.ArcGIS.Controls.AxToolbarControl();
       this.axTOCControl1 = new ESRI.ArcGIS.Controls.AxTOCControl();
@@ -55,6 +62,13 @@ namespace MapControlApplication111 {
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.statusBarXY = new System.Windows.Forms.ToolStripStatusLabel();
       this.axPageLayoutControl1 = new ESRI.ArcGIS.Controls.AxPageLayoutControl();
+      this.miTopo = new System.Windows.Forms.ToolStripMenuItem();
+      this.miBuffer = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
+      this.miTableList = new System.Windows.Forms.ToolStripMenuItem();
+      this.miStatistics = new System.Windows.Forms.ToolStripMenuItem();
+      this.miStat = new System.Windows.Forms.ToolStripMenuItem();
+      this.miShowLength = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.axMapControl1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.axToolbarControl1)).BeginInit();
@@ -72,7 +86,11 @@ namespace MapControlApplication111 {
             this.miCreateBookmark,
             this.cbBookmarkList,
             this.miSpaceData,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.miData,
+            this.miSpaceAnalysis,
+            this.miTopo,
+            this.miStatistics});
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
       this.menuStrip1.Size = new System.Drawing.Size(1145, 32);
@@ -88,7 +106,8 @@ namespace MapControlApplication111 {
             this.menuSaveAs,
             this.miPrint,
             this.menuSeparator,
-            this.menuExitApp});
+            this.menuExitApp,
+            this.miOutput});
       this.menuFile.Name = "menuFile";
       this.menuFile.Size = new System.Drawing.Size(53, 28);
       this.menuFile.Text = "文件";
@@ -98,7 +117,7 @@ namespace MapControlApplication111 {
       this.menuNewDoc.Image = ((System.Drawing.Image)(resources.GetObject("menuNewDoc.Image")));
       this.menuNewDoc.ImageTransparentColor = System.Drawing.Color.White;
       this.menuNewDoc.Name = "menuNewDoc";
-      this.menuNewDoc.Size = new System.Drawing.Size(137, 26);
+      this.menuNewDoc.Size = new System.Drawing.Size(152, 26);
       this.menuNewDoc.Text = "新建";
       this.menuNewDoc.Click += new System.EventHandler(this.menuNewDoc_Click);
       // 
@@ -107,7 +126,7 @@ namespace MapControlApplication111 {
       this.menuOpenDoc.Image = ((System.Drawing.Image)(resources.GetObject("menuOpenDoc.Image")));
       this.menuOpenDoc.ImageTransparentColor = System.Drawing.Color.White;
       this.menuOpenDoc.Name = "menuOpenDoc";
-      this.menuOpenDoc.Size = new System.Drawing.Size(137, 26);
+      this.menuOpenDoc.Size = new System.Drawing.Size(152, 26);
       this.menuOpenDoc.Text = "打开";
       this.menuOpenDoc.Click += new System.EventHandler(this.menuOpenDoc_Click);
       // 
@@ -116,14 +135,14 @@ namespace MapControlApplication111 {
       this.menuSaveDoc.Image = ((System.Drawing.Image)(resources.GetObject("menuSaveDoc.Image")));
       this.menuSaveDoc.ImageTransparentColor = System.Drawing.Color.White;
       this.menuSaveDoc.Name = "menuSaveDoc";
-      this.menuSaveDoc.Size = new System.Drawing.Size(137, 26);
+      this.menuSaveDoc.Size = new System.Drawing.Size(152, 26);
       this.menuSaveDoc.Text = "保存";
       this.menuSaveDoc.Click += new System.EventHandler(this.menuSaveDoc_Click);
       // 
       // menuSaveAs
       // 
       this.menuSaveAs.Name = "menuSaveAs";
-      this.menuSaveAs.Size = new System.Drawing.Size(137, 26);
+      this.menuSaveAs.Size = new System.Drawing.Size(152, 26);
       this.menuSaveAs.Text = "另存为";
       this.menuSaveAs.Click += new System.EventHandler(this.menuSaveAs_Click);
       // 
@@ -131,21 +150,28 @@ namespace MapControlApplication111 {
       // 
       this.miPrint.Enabled = false;
       this.miPrint.Name = "miPrint";
-      this.miPrint.Size = new System.Drawing.Size(137, 26);
+      this.miPrint.Size = new System.Drawing.Size(152, 26);
       this.miPrint.Text = "打印";
       this.miPrint.Click += new System.EventHandler(this.miPrint_Click);
       // 
       // menuSeparator
       // 
       this.menuSeparator.Name = "menuSeparator";
-      this.menuSeparator.Size = new System.Drawing.Size(134, 6);
+      this.menuSeparator.Size = new System.Drawing.Size(149, 6);
       // 
       // menuExitApp
       // 
       this.menuExitApp.Name = "menuExitApp";
-      this.menuExitApp.Size = new System.Drawing.Size(137, 26);
+      this.menuExitApp.Size = new System.Drawing.Size(152, 26);
       this.menuExitApp.Text = "Exit";
       this.menuExitApp.Click += new System.EventHandler(this.menuExitApp_Click);
+      // 
+      // miOutput
+      // 
+      this.miOutput.Name = "miOutput";
+      this.miOutput.Size = new System.Drawing.Size(152, 26);
+      this.miOutput.Text = "地图输出";
+      this.miOutput.Click += new System.EventHandler(this.miOutput_Click);
       // 
       // miCreateBookmark
       // 
@@ -215,6 +241,52 @@ namespace MapControlApplication111 {
       this.miPageLayer.Size = new System.Drawing.Size(197, 26);
       this.miPageLayer.Text = "显示页面布局";
       this.miPageLayer.Click += new System.EventHandler(this.miPageLayer_Click);
+      // 
+      // miData
+      // 
+      this.miData.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCreateShapefile,
+            this.miAddFeature});
+      this.miData.Name = "miData";
+      this.miData.Size = new System.Drawing.Size(83, 28);
+      this.miData.Text = "数据操作";
+      // 
+      // miCreateShapefile
+      // 
+      this.miCreateShapefile.Name = "miCreateShapefile";
+      this.miCreateShapefile.Size = new System.Drawing.Size(197, 26);
+      this.miCreateShapefile.Text = "创建Shape文件";
+      this.miCreateShapefile.Click += new System.EventHandler(this.miCreatShapefile_Click);
+      // 
+      // miAddFeature
+      // 
+      this.miAddFeature.Enabled = false;
+      this.miAddFeature.Name = "miAddFeature";
+      this.miAddFeature.Size = new System.Drawing.Size(197, 26);
+      this.miAddFeature.Text = "添加要素";
+      this.miAddFeature.Click += new System.EventHandler(this.miAddFeature_Click);
+      // 
+      // miSpaceAnalysis
+      // 
+      this.miSpaceAnalysis.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miSpaceFilter,
+            this.miInfo});
+      this.miSpaceAnalysis.Name = "miSpaceAnalysis";
+      this.miSpaceAnalysis.Size = new System.Drawing.Size(83, 28);
+      this.miSpaceAnalysis.Text = "空间分析";
+      // 
+      // miSpaceFilter
+      // 
+      this.miSpaceFilter.Name = "miSpaceFilter";
+      this.miSpaceFilter.Size = new System.Drawing.Size(224, 26);
+      this.miSpaceFilter.Text = "空间查询";
+      this.miSpaceFilter.Click += new System.EventHandler(this.miSpaceFilter_Click);
+      // 
+      // miInfo
+      // 
+      this.miInfo.Name = "miInfo";
+      this.miInfo.Size = new System.Drawing.Size(224, 26);
+      this.miInfo.Text = "属性信息";
       // 
       // axMapControl1
       // 
@@ -301,6 +373,58 @@ namespace MapControlApplication111 {
       this.axPageLayoutControl1.Visible = false;
       this.axPageLayoutControl1.OnMouseDown += new ESRI.ArcGIS.Controls.IPageLayoutControlEvents_Ax_OnMouseDownEventHandler(this.axPageLayoutControl1_OnMouseDown);
       // 
+      // miTopo
+      // 
+      this.miTopo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miBuffer});
+      this.miTopo.Name = "miTopo";
+      this.miTopo.Size = new System.Drawing.Size(83, 28);
+      this.miTopo.Text = "拓扑分析";
+      // 
+      // miBuffer
+      // 
+      this.miBuffer.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miSearch,
+            this.miTableList});
+      this.miBuffer.Name = "miBuffer";
+      this.miBuffer.Size = new System.Drawing.Size(224, 26);
+      this.miBuffer.Text = "缓冲区分析";
+      // 
+      // miSearch
+      // 
+      this.miSearch.Name = "miSearch";
+      this.miSearch.Size = new System.Drawing.Size(224, 26);
+      this.miSearch.Text = "查询";
+      this.miSearch.Click += new System.EventHandler(this.miSearch_Click);
+      // 
+      // miTableList
+      // 
+      this.miTableList.Name = "miTableList";
+      this.miTableList.Size = new System.Drawing.Size(224, 26);
+      this.miTableList.Text = "属性列表";
+      // 
+      // miStatistics
+      // 
+      this.miStatistics.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miStat,
+            this.miShowLength});
+      this.miStatistics.Name = "miStatistics";
+      this.miStatistics.Size = new System.Drawing.Size(83, 28);
+      this.miStatistics.Text = "数据统计";
+      // 
+      // miStat
+      // 
+      this.miStat.Name = "miStat";
+      this.miStat.Size = new System.Drawing.Size(224, 26);
+      this.miStat.Text = "要素统计";
+      this.miStat.Click += new System.EventHandler(this.miStat_Click);
+      // 
+      // miShowLength
+      // 
+      this.miShowLength.Name = "miShowLength";
+      this.miShowLength.Size = new System.Drawing.Size(224, 26);
+      this.miShowLength.Text = "长度测定";
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -312,8 +436,8 @@ namespace MapControlApplication111 {
       this.Controls.Add(this.splitter1);
       this.Controls.Add(this.axToolbarControl1);
       this.Controls.Add(this.menuStrip1);
-      this.Controls.Add(this.axPageLayoutControl1);
       this.Controls.Add(this.axMapControl1);
+      this.Controls.Add(this.axPageLayoutControl1);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip1;
       this.Margin = new System.Windows.Forms.Padding(4);
@@ -363,6 +487,20 @@ namespace MapControlApplication111 {
     private System.Windows.Forms.ToolStripMenuItem miMap;
     private System.Windows.Forms.ToolStripMenuItem miPageLayer;
     private ESRI.ArcGIS.Controls.AxPageLayoutControl axPageLayoutControl1;
+    private System.Windows.Forms.ToolStripMenuItem miOutput;
+    private System.Windows.Forms.ToolStripMenuItem miData;
+    private System.Windows.Forms.ToolStripMenuItem miCreateShapefile;
+    private System.Windows.Forms.ToolStripMenuItem miAddFeature;
+    private System.Windows.Forms.ToolStripMenuItem miSpaceAnalysis;
+    private System.Windows.Forms.ToolStripMenuItem miSpaceFilter;
+    private System.Windows.Forms.ToolStripMenuItem miInfo;
+    private System.Windows.Forms.ToolStripMenuItem miTopo;
+    private System.Windows.Forms.ToolStripMenuItem miBuffer;
+    private System.Windows.Forms.ToolStripMenuItem miSearch;
+    private System.Windows.Forms.ToolStripMenuItem miTableList;
+    private System.Windows.Forms.ToolStripMenuItem miStatistics;
+    private System.Windows.Forms.ToolStripMenuItem miStat;
+    private System.Windows.Forms.ToolStripMenuItem miShowLength;
   }
 }
 
